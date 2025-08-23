@@ -1,1 +1,54 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --primary-color: white;
+    --secondary-color: #cecece;
+    --threery-color: #ffffff;
+    --primary-text-color: #2E2E2E;
+    --border-color: #686c75;
+    --accent-color: #9899e5;
+    --success-color: #9583b5;
+    --error-color: #EF4444;
+    --button-color: #df6e74;
+}
+
+body.dark-theme {
+    --primary-color: #242831;
+    --secondary-color: #3b3f4d;
+    --threery-color: #252a33;
+    --primary-text-color: #E5E7EB;
+    --border-color: #1b1e24;
+    --accent-color: #60A5FA;
+    --success-color: #34D399;
+    --error-color: #F87171;
+    --button-color: #3B82F6;
+}
+
+body {
+    margin: 0;
+    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+    height: 100vh;
+    background-color: var(--primary-color);
+    color: var(--primary-text-color);
+
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+input {
+    outline: none;
+}
+
+html,
+body {
+    height: 100%;
+}
