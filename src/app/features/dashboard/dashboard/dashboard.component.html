@@ -1,0 +1,13 @@
+<header class="dashboard-header">
+    <h1 class="dashboard-header__title">Dashboard</h1>
+    <div class="dashboard-header__buttons">
+        <button class="action" (click)="logoutWithAccount()">Logout</button>
+        <button class="action" (click)="deleteAccount()">Delete Account</button>
+        <button class="action" (click)="changeTheme()">{{themeButtonText}}</button>
+    </div>
+</header>
+<main class="dashboard-main">
+    <app-notes class="notes"></app-notes>
+    <app-untitled-notes class="untitled-notes"></app-untitled-notes>
+    <app-chat class="chat"></app-chat>
+</main>
