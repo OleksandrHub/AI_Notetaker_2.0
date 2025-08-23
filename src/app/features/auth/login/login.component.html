@@ -1,1 +1,17 @@
-<p>login.component works!</p>
+<main class="login">
+    <form class="login-form" [formGroup]="form" (submit)="sendLogin()">
+        <h1 class="login-form__title">Login</h1>
+
+        <label for="login" class="login-form__label">Login</label>
+        <input type="text" name="login" id="login" placeholder="Login" class="login-form__input"
+            formControlName="formLogin">
+
+        <label for="password" class="login-form__label">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password" class="login-form__input"
+            formControlName="formPassword">
+
+        <p class="login-form__error" *ngIf="errorMessage">{{errorMessage}}</p>
+        <button type="submit" class="login-form__button">Login</button>
+        <button type="button" class="login-register__button" routerLink="/registration">Register</button>
+    </form>
+</main>

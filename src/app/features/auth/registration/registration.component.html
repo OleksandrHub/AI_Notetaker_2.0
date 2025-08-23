@@ -1,1 +1,21 @@
-<p>registration.component works!</p>
+<main class="registration">
+    <form class="registration-form" [formGroup]="form" (submit)="sendRegistration()">
+        <h1 class="registration-form__title">Registration</h1>
+
+        <label for="login">Login</label>
+        <input type="text" name="login" id="login" (keydown.space)="false" placeholder="Login (no spaces)"
+            class="registration-form__input" formControlName="formLogin">
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" (keydown.space)="false" placeholder="Password (no spaces)"
+            class="registration-form__input" formControlName="formPassword">
+
+        <label for="repeat_password">Repeat password</label>
+        <input type="password" name="repeat_password" id="repeat_password" (keydown.space)="false"
+            placeholder="Password (no spaces)" class="registration-form__input" formControlName="formRepeatPassword">
+
+        <p class="registration-form__error" *ngIf="errorMessage">{{errorMessage}}</p>
+        <button type="submit" class="registration-form__button">Registration</button>
+        <button type="button" class="registration-login__button" routerLink="/login">Login</button>
+    </form>
+</main>
