@@ -1,1 +1,27 @@
-<p>chat component works!</p>
+<header class="chat-header">
+    <p class="chat-header__title">Chat</p>
+</header>
+<main class="chat-main">
+    <section class="chat-message">
+        <section class="chat-message-header">
+            <h2 class="chat-message__title">Ask about this note</h2>
+            <h2 class="chat-message__title">WELCOME TO CHAT {{nameUser}}</h2>
+        </section>
+        <fieldset *ngFor="let message of messages" class="chat-message__text"
+            [ngClass]="'chat-message__text--' + message.user.toLowerCase()" (click)="selectMessage(message)">
+            <legend>{{message.user}}</legend>
+            <pre>{{message.text}}</pre>
+        </fieldset>
+    </section>
+
+    <form class="chat-footer" [formGroup]="form" (submit)="sendMessage()">
+        <fieldset class="chat-footer__field">
+            <legend class="chat-footer__error" *ngIf="messageError">
+                {{messageError}}
+            </legend>
+            <textarea type="text" name="chat input" id="chat input" placeholder="chat input" class="chat-footer__input"
+                [formControl]="chatInput"></textarea>
+        </fieldset>
+        <button class="chat-footer__action">Send</button>
+    </form>
+</main>

@@ -10,7 +10,6 @@ import { SnackBarService } from '../../../core/services/snackBar.service';
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [ChatComponent, UntitledNotesComponent, NotesComponent],
 })

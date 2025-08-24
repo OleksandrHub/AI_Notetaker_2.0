@@ -1,0 +1,25 @@
+.notes {
+    &__note {
+        font-size: 0.75rem;
+    }
+
+    &__summary {
+        font-size: 1.25rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+    &__text {
+        padding: 10px;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
+
+    &__button {
+        margin: 5px;
+        margin-left: 0;
+        padding: 10px;
+    }
+}

@@ -1,0 +1,151 @@
+.chat {
+    &-main {
+        flex-direction: column;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    &-message {
+        overflow: auto;
+        height: clamp(150px, 50vh, 500px);
+
+        &__title {
+            text-align: center;
+            padding: 0 auto;
+            margin: 10px 0;
+            font-size: 1.5rem;
+        }
+
+        &__action {
+            display: block;
+            padding: 10px 0;
+            display: block;
+            margin: 10px auto;
+            width: clamp(100px, 100px + 5vw, 250px);
+        }
+
+        &__text {
+            width: clamp(100px, 100px + 10vw, 300px);
+            border: none;
+        }
+
+        &__text--user {
+            margin: 0 0 0 auto;
+        }
+
+        &__text--bot {
+            cursor: pointer;
+            position: relative;
+
+            &:hover::after {
+                content: 'Click to make a note';
+                color: var(--primary-text-color);
+                background-color: var(--accent-color);
+                position: absolute;
+                top: -20px;
+                right: 0;
+                padding: 5px;
+                border-radius: 5px;
+                font-size: clamp(0.5rem, 0.1875rem + 1vw, 0.75rem);
+            }
+        }
+
+        &__text legend {
+            width: 100%;
+            padding-right: 10px;
+            margin-bottom: 2px;
+        }
+
+        &__text--user legend {
+            text-align: right;
+        }
+
+        &__text pre {
+            width: clamp(100px, 100px + 10vw, 300px);
+            background-color: var(--secondary-color);
+            font-size: 0.75rem;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+
+        }
+
+        &__text--bot pre {
+            background-color: var(--primary-color);
+            border: 1px solid var(--border-color);
+        }
+    }
+
+    &-footer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        width: 100%;
+
+        &__field {
+            position: relative;
+            width: 65%;
+            margin: 0 10px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        &__input {
+            border: 1px solid var(--border-color);
+            width: 100%;
+            padding: 8px;
+            line-height: 1.5rem;
+            font-size: 1rem;
+            resize: none;
+            border-radius: 10px;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        &__error {
+            padding: 2px;
+            border-radius: 5px;
+            position: absolute;
+            top: -1.25rem;
+            left: 0;
+            color: var(--error-color);
+            font-size: 0.6rem;
+        }
+
+        &__action {
+            margin: 5px;
+            padding: 1.5rem 30px;
+        }
+    }
+}
+
+.chat {
+    &-header {
+        height: 40px;
+        border-bottom: 1px solid var(--border-color);
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &__title {
+            font-size: 1.5rem;
+            padding-left: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+    }
+
+    &-main {
+        min-height: 300px;
+        height: calc(100% - 40px);
+        padding: 10px;
+    }
+}
