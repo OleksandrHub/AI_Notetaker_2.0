@@ -1,1 +1,8 @@
-<p>note component works!</p>
+<section class="notes__note">
+    <details class="notes__details">
+        <summary class="notes__summary">{{ note.title }}</summary>
+        <pre class="notes__text">{{ note.content }}</pre>
+    </details>
+    <button class="notes__button" (click)="deleteNote(note.id)">Delete note</button>
+    <button class="notes__button" (click)="editNote(note.id)">Edit note</button>
+</section>

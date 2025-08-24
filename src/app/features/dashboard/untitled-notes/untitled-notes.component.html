@@ -1,1 +1,23 @@
-<p>untitled-notes component works!</p>
+<header class="untitled-notes-header">
+    <p class="untitled-notes-header__title">Untitled notes</p>
+</header>
+<main class="untitled-notes-main">
+    <p class="untitled-notes__text" *ngIf="note.id === 0">Add your notes</p>
+    <form class="untitled-notes__notes" *ngIf="note.id !== 0" [formGroup]="form" (ngSubmit)="saveNote()">
+        <button class="untitled-notes__button--close" (click)="closeNote()" type="button">✘</button>
+
+        <label for="title" class="untitled-notes__label">Title</label>
+        <input type="text" id="title" placeholder="Title" class="untitled-notes__input" [formControl]="formTitle">
+
+        <label for="content" class="untitled-notes__label">Content</label>
+        <textarea id="content" placeholder="Content" class="untitled-notes__input untitled-notes__input--textarea"
+            [formControl]="formContent"></textarea>
+
+        <p class="untitled-notes__error" *ngIf="messageError">
+            {{messageError}}
+        </p>
+
+        <button class="untitled-notes__button--save" type="submit">Save note</button>
+
+    </form>
+</main>
