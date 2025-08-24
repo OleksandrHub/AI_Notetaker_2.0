@@ -8,11 +8,12 @@ export class SnackBarService {
 
     constructor(private _snackBar: MatSnackBar) { }
 
-    public open(message: string, action: string = 'Закрити') {
+    public open(message: string, action: string = 'Закрити', panelClass: string = 'default-snackbar') {
         this._snackBar.open(message, action, {
             duration: 3000,
             verticalPosition: 'bottom',
             horizontalPosition: 'center',
+            panelClass: [panelClass]
         });
     }
 }
