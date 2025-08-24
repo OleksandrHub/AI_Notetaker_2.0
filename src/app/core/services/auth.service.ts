@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { IUser } from "../../shared/Interfaces";
 import { ThemeService } from "./theme.service";
 import { NoteService } from "./note.service";
-import { THEME_STORAGE_KEY, TOKEN_KEY } from "../../shared/constants";
+import { NOTES, THEME_STORAGE_KEY, TOKEN_KEY, USERS } from "../../shared/constants";
 import { SnackBarService } from "./snackBar.service";
 
 @Injectable({
@@ -59,11 +59,11 @@ export class AuthService {
 
     public deleteAccount() {
         if (this.userisAuth) {
-            const notes = JSON.parse(localStorage.getItem('notes') || '{}');
+            const notes = JSON.parse(localStorage.getItem(NOTES) || '{}');
             const darkThemeUserIds = JSON.parse(localStorage.getItem(THEME_STORAGE_KEY) || '[]') as number[];
             const userId = this.userisAuth.id;
             delete notes[userId];
-            localStorage.setItem('notes', JSON.stringify(notes));
+            localStorage.setItem(NOTES, JSON.stringify(notes));
 
             if (darkThemeUserIds.includes(userId)) {
                 darkThemeUserIds.splice(darkThemeUserIds.indexOf(userId), 1);
@@ -77,11 +77,11 @@ export class AuthService {
     }
 
     private saveUsersToLocalStorage() {
-        localStorage.setItem('users', JSON.stringify(this.users));
+        localStorage.setItem(USERS, JSON.stringify(this.users));
     }
 
     private loadUsersFromLocalStorage() {
-        const users = localStorage.getItem('users');
+        const users = localStorage.getItem(USERS);
         try {
             this.users = users ? JSON.parse(users) : [];
         } catch (e) {

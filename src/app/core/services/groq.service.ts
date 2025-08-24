@@ -15,7 +15,7 @@ export class GroqService {
 
     constructor(private http: HttpClient) { }
 
-    summarize(text: string): Observable<string> {
+    public summarize(text: string): Observable<string> {
         const body = {
             model: 'llama3-8b-8192',
             messages: [

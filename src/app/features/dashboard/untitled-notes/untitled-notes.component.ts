@@ -65,11 +65,7 @@ export class UntitledNotesComponent implements OnInit, OnDestroy {
   }
 
   closeNote() {
-    this.noteService.editNoteObj.next({
-      id: 0,
-      title: '',
-      content: ''
-    });
+    this.noteService.newNote({ id: 0, title: '', content: '' });
 
     this.form.reset();
   }
