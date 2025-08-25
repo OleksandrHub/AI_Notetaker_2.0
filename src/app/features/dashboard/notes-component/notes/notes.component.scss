@@ -25,6 +25,7 @@
     &-main {
         min-height: 300px;
         height: calc(100% - 40px);
+        max-height: calc(100vh - 100px);
         padding: 10px;
     }
 }

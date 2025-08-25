@@ -1,3 +1,5 @@
+@use "../../../shared/styles/extends.scss";
+
 .chat {
     &-main {
         flex-direction: column;
@@ -119,6 +121,7 @@
         }
 
         &__action {
+            @extend %button;
             margin: 5px;
             padding: 1.5rem 30px;
         }

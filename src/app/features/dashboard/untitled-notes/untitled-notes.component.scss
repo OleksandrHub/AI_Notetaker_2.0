@@ -1,3 +1,5 @@
+@use "../../../shared/styles/extends.scss";
+
 .untitled-notes {
     &-header {
         height: 40px;
@@ -58,12 +60,15 @@
     }
 
     &__button--close {
+        @extend %button;
         width: 30px;
         height: 30px;
-        margin-left: 0;
+        padding: 0;
+        margin-left: 10px;
     }
 
     &__button--save {
+        @extend %button;
         width: 90%;
         padding: 10px;
 

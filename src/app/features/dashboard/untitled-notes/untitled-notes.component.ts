@@ -66,6 +66,7 @@ export class UntitledNotesComponent implements OnInit, OnDestroy {
 
   public closeNote() {
     this.noteService.newNote({ id: 0, title: '', content: '' });
+    this.snackBarService.open('Нотатка успішно закрита!');
 
     this.form.reset();
   }
