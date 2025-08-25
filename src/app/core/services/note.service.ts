@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { INote, INoteWithUserId } from "../../shared/Interfaces";
 import { BehaviorSubject } from "rxjs";
 import { NOTES, TOKEN_KEY } from "../../shared/constants";
+import jsPDF from 'jspdf';
 
 @Injectable({
     providedIn: "root",
@@ -72,6 +73,35 @@ export class NoteService {
 
     public newNote(note: INote) {
         this.editNoteObj.next(note);
+    }
+
+    public DownloadNote(id: number): boolean {
+        const temp_notes = this.notes.getValue();
+        const note = temp_notes.filter((note) => note.id === id)[0];
+        if (note) {
+            const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+
+            doc.setFontSize(22);
+            doc.setFont("helvetica", "bold");
+            doc.text(note.title, 10, 20, { maxWidth: 180 });
+
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "normal");
+            doc.text(note.content, 10, 40, { maxWidth: 180 });
+
+            const date = new Date().toLocaleDateString();
+            const pageHeight = doc.internal.pageSize.height;
+            const pageWidth = doc.internal.pageSize.width;
+            const textWidth = doc.getTextWidth(`Дата: ${date}`);
+
+            doc.setFontSize(10);
+            doc.text(`Дата: ${date}`, pageWidth - textWidth - 20, pageHeight - 10);
+
+            doc.save(note.title + '.pdf');
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public loadNotesFromLocalStorage() {

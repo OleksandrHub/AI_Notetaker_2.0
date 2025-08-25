@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
   styleUrl: './notes.component.scss'
 })
 export class NotesComponent {
-  notes$: Observable<INote[]>;
+  public notes$: Observable<INote[]>;
 
   constructor(private noteService: NoteService) {
     this.notes$ = this.noteService.notes$;

@@ -14,7 +14,7 @@ import { SnackBarService } from '../../../core/services/snackBar.service';
   imports: [ChatComponent, UntitledNotesComponent, NotesComponent],
 })
 export class DashboardComponent {
-  themeButtonText: string = 'Dark mode';
+  protected themeButtonText: string = 'Dark mode';
 
   constructor(
     private authService: AuthService,
@@ -22,17 +22,17 @@ export class DashboardComponent {
     private snackBarService: SnackBarService,
   ) { }
 
-  logoutWithAccount() {
+  public logoutWithAccount() {
     this.authService.logoutWithAccount();
     this.snackBarService.open('Ви успішно вийшли з акаунту!');
   }
 
-  deleteAccount() {
+  public deleteAccount() {
     this.authService.deleteAccount();
     this.snackBarService.open('Ви успішно видалили акаунт!');
   }
 
-  changeTheme() {
+  public changeTheme() {
     this.themeButtonText = this.themeService.changeTheme();
     this.snackBarService.open(`Тема змінена на ${this.themeButtonText}`);
   }

@@ -14,7 +14,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class UntitledNotesComponent implements OnInit, OnDestroy {
   constructor(private noteService: NoteService, private snackBarService: SnackBarService) { }
-  note: INote = {
+  public note: INote = {
     id: 0,
     title: '',
     content: ''
@@ -22,11 +22,11 @@ export class UntitledNotesComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  formTitle = new FormControl('', Validators.required);
-  formContent = new FormControl('', Validators.required);
-  messageError: string = '';
+  protected formTitle = new FormControl('', Validators.required);
+  protected formContent = new FormControl('', Validators.required);
+  protected messageError: string = '';
 
-  form = new FormGroup({
+  public form = new FormGroup({
     formTitle: this.formTitle,
     formContent: this.formContent
   });
@@ -48,7 +48,7 @@ export class UntitledNotesComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  saveNote() {
+  public saveNote() {
     this.messageError = '';
 
     if (this.form.valid) {
@@ -64,7 +64,7 @@ export class UntitledNotesComponent implements OnInit, OnDestroy {
     }
   }
 
-  closeNote() {
+  public closeNote() {
     this.noteService.newNote({ id: 0, title: '', content: '' });
 
     this.form.reset();

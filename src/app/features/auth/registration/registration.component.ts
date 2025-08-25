@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,7 +8,9 @@ import { SnackBarService } from '../../../core/services/snackBar.service';
   selector: 'app-registation',
   imports: [RouterLink, FormsModule, ReactiveFormsModule],
   templateUrl: './registration.component.html',
-  styleUrl: './registration.component.scss'
+  styleUrl: './registration.component.scss',
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegistrationComponent {
   protected errorMessage: string = ''

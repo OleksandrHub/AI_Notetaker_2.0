@@ -10,15 +10,19 @@ import { SnackBarService } from '../../../../core/services/snackBar.service';
   styleUrl: './note.component.scss'
 })
 export class NoteComponent {
-  @Input() note!: INote;
+  @Input() public note!: INote;
 
   constructor(private noteService: NoteService, private snackBarService: SnackBarService) { }
-  deleteNote(id: number) {
+  protected deleteNote(id: number) {
     this.noteService.deleteNote(id);
     this.snackBarService.open('Нотатка успішно видалена!');
   }
 
-  editNote(id: number) {
+  protected editNote(id: number) {
     this.noteService.editNote(id);
+  }
+
+  protected DownloadNote(id: number) {
+    this.noteService.DownloadNote(id) ? this.snackBarService.open('Нотатка успішно завантажена!') : this.snackBarService.open('Помилка завантаження нотатки!');
   }
 }

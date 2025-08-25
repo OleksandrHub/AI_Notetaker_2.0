@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
@@ -8,7 +8,9 @@ import { SnackBarService } from '../../../core/services/snackBar.service';
   selector: 'app-login',
   imports: [RouterLink, FormsModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
   protected errorMessage: string = '';
