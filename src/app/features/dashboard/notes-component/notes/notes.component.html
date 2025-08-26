@@ -2,5 +2,13 @@
     <p class="notes-header__title">Notes</p>
 </header>
 <main class="notes-main">
-    <app-note *ngFor="let note of notes$ | async" [note]="note"></app-note>
+    <div class="notes-tag-filter">
+        <button class="notes-tag-filter__button" (click)="this.selectedTag = null"
+            [class.notes-tag-filter__button--active]="selectedTag === null">All</button>
+        <button class="notes-tag-filter__button" *ngFor="let tag of allTags" (click)="filterByTag(tag)"
+            [class.notes-tag-filter__button--active]="selectedTag === tag">
+            {{ tag }}
+        </button>
+    </div>
+    <app-note *ngFor="let note of filteredNotes()" [note]="note"></app-note>
 </main>

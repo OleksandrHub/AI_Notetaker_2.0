@@ -55,7 +55,8 @@ export class UntitledNotesComponent implements OnInit, OnDestroy {
       this.noteService.saveNote({
         id: this.note.id,
         title: this.formTitle.value || '',
-        content: this.formContent.value || ''
+        content: this.formContent.value || '',
+        tags: this.note.tags
       });
       this.snackBarService.open('Нотатка успішно збережена!');
       this.closeNote();

@@ -2,6 +2,31 @@
     &-main {
         overflow-y: auto;
     }
+
+    &-tag-filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin: 10px 0;
+
+        &__button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: var(--secondary-color);
+            color: var(--primary-text-color);
+
+            &:hover {
+                background-color: var(--border-color);
+            }
+
+            &--active {
+                background-color: var(--accent-color);
+                color: var(--primary-color);
+            }
+        }
+    }
 }
 
 .notes {
