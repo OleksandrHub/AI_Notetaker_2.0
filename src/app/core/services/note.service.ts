@@ -82,23 +82,35 @@ export class NoteService {
         const note = temp_notes.filter((note) => note.id === id)[0];
         if (note) {
             const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-
+            // Заголовок
             doc.setFontSize(22);
-            doc.setFont("helvetica", "bold");
-            doc.text(note.title, 10, 20, { maxWidth: 180 });
+            doc.setFont("Roboto", "bold");
+            const titleLines = doc.splitTextToSize(note.title, 180);
+            doc.text(titleLines, 10, 20);
 
+            // Вміст нотатки
             doc.setFontSize(12);
-            doc.setFont("helvetica", "normal");
-            doc.text(note.content, 10, 40, { maxWidth: 180 });
+            doc.setFont("Roboto", "normal");
+            const startY = 20 + titleLines.length * 10; // 10 мм висота рядка
+            const contentLines = doc.splitTextToSize(note.content, 180);
+            doc.text(contentLines, 10, startY);
 
+            // Теги
+            doc.setFontSize(10);
+            doc.setFont("Roboto", "normal");
+            const tagsText = note.tags ? note.tags.join(', ') : '';
+            const tagsY = startY + contentLines.length * 7 + 5; // відступ після контенту
+            doc.text(tagsText, 10, tagsY);
+
+            // Дата справа внизу
             const date = new Date().toLocaleDateString();
             const pageHeight = doc.internal.pageSize.height;
             const pageWidth = doc.internal.pageSize.width;
-            const textWidth = doc.getTextWidth(`Дата: ${date}`);
-
             doc.setFontSize(10);
-            doc.text(`Дата: ${date}`, pageWidth - textWidth - 20, pageHeight - 10);
+            const textWidth = doc.getTextWidth(`Дата: ${date}`) + 10;
+            doc.text(`Дата: ${date}`, pageWidth - textWidth - 10, pageHeight - 10);
 
+            // Зберігаємо PDF
             doc.save(note.title + '.pdf');
             return true;
         } else {

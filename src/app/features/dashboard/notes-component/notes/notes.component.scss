@@ -1,5 +1,20 @@
+@use "../../../../shared/styles/extends.scss";
+@use "../../../../shared/styles/mixins.scss";
+@use "../../../../shared/styles/variables.scss" as vars;
+
 .notes {
+    &-header {
+        @extend %header;
+
+        &__title {
+            @extend %header-title;
+        }
+    }
+
     &-main {
+        @extend %main;
+        max-height: calc(100vh - vars.$height-header - vars.$height-header-dashboard - 20px);
+        padding: 10px;
         overflow-y: auto;
     }
 
@@ -18,7 +33,7 @@
             color: var(--primary-text-color);
 
             &:hover {
-                background-color: var(--border-color);
+                background-color: var(--success-color);
             }
 
             &--active {
@@ -26,31 +41,5 @@
                 color: var(--primary-color);
             }
         }
-    }
-}
-
-.notes {
-    &-header {
-        height: 40px;
-        border-bottom: 1px solid var(--border-color);
-        border-radius: 5px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        &__title {
-            font-size: 1.5rem;
-            padding-left: 10px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap
-        }
-    }
-
-    &-main {
-        min-height: 300px;
-        height: calc(100% - 40px);
-        max-height: calc(100vh - 100px);
-        padding: 10px;
     }
 }

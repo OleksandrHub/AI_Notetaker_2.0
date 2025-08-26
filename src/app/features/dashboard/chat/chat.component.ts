@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IMessage } from '../../../shared/Interfaces';
@@ -12,9 +12,7 @@ import { SnackBarService } from '../../../core/services/snackBar.service';
   selector: 'app-chat',
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
-    NgClass,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
   ],

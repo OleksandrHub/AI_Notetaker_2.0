@@ -4,3 +4,26 @@
     align-items: $align;
     flex-direction: $direction;
 }
+
+@mixin input($border: true, $resize: none) {
+    display: block;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+
+    @if $border {
+        border: 1px solid var(--border-color);
+    }
+
+    @else {
+        border: none;
+    }
+
+    @if $resize {
+        resize: $resize;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
