@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 %button {
     cursor: pointer;
     background-color: var(--accent-color);
@@ -11,4 +13,40 @@
         background-color: var(--success-color);
         transform: scale(1.1);
     }
+}
+
+%header {
+    height: $height-header;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+%header-title {
+    font-size: 1.5rem;
+    padding-left: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+%main {
+    height: max(300px, calc(100% - $height-header));
+    padding: 10px;
+}
+
+%form-login-register {
+    gap: 10px;
+    background-color: var(--secondary-color);
+    border-radius: 20px;
+    padding: 20px;
+    width: min(500px, 100%);
+}
+
+%error {
+    color: var(--error-color);
+    font-size: 0.75rem;
+    text-align: center;
 }

@@ -17,7 +17,7 @@ export class OpenAiService {
 
     constructor(private http: HttpClient) { }
 
-    summarize(text: string): Observable<string> {
+    public summarize(text: string): Observable<string> {
         const body = {
             "model": "gpt-3.5-turbo",
             "messages": [

@@ -14,7 +14,10 @@
         <input type="password" name="repeat_password" id="repeat_password" (keydown.space)="false"
             placeholder="Password (no spaces)" class="registration-form__input" formControlName="formRepeatPassword">
 
-        <p class="registration-form__error" *ngIf="errorMessage">{{errorMessage}}</p>
+        @if (errorMessage){
+        <p class="registration-form__error">{{errorMessage}}</p>
+        }
+
         <button type="submit" class="registration-form__button">Registration</button>
         <button type="button" class="registration-login__button" routerLink="/login">Login</button>
     </form>

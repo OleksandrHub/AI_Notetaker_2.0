@@ -1,34 +1,19 @@
+@use "../../../shared/styles/extends.scss";
+@use "../../../shared/styles/mixins.scss";
+
 .untitled-notes {
     &-header {
-        height: 40px;
-        border-bottom: 1px solid var(--border-color);
-        border-radius: 5px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        @extend %header;
 
         &__title {
-            font-size: 1.5rem;
-            padding-left: 10px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap
+            @extend %header-title;
         }
     }
 
     &-main {
-        min-height: 300px;
-        height: calc(100% - 40px);
-        padding: 10px;
-    }
-}
-
-.untitled-notes {
-    &-main {
+        @extend %main;
         background-color: var(--secondary-color);
-        align-items: center;
-        display: flex;
-        justify-content: center;
+        @include mixins.flex(row, center, center);
     }
 
     &__text {
@@ -58,12 +43,15 @@
     }
 
     &__button--close {
+        @extend %button;
         width: 30px;
         height: 30px;
-        margin-left: 0;
+        padding: 0;
+        margin-left: 10px;
     }
 
     &__button--save {
+        @extend %button;
         width: 90%;
         padding: 10px;
 
@@ -75,9 +63,7 @@
     }
 
     &__error {
-        color: var(--error-color);
-        font-size: 0.75rem;
-        text-align: center;
+        @extend %error;
     }
 
 }

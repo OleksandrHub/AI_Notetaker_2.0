@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { INote, INoteWithUserId } from "../../shared/Interfaces";
-import { BehaviorSubject, max } from "rxjs";
+import { BehaviorSubject } from "rxjs";
+import { NOTES, TOKEN_KEY } from "../../shared/constants";
+import jsPDF from 'jspdf';
 
 @Injectable({
     providedIn: "root",
@@ -16,12 +18,14 @@ export class NoteService {
         {
             id: 1,
             title: 'Note 1',
-            content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque laudantium recusandae eaque labore eos eum optio numquam dolor, dolore commodi sit dolores voluptatum magnam sunt repellat! Modi ipsum doloribus saepe.'
+            content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque laudantium recusandae eaque labore eos eum optio numquam dolor, dolore commodi sit dolores voluptatum magnam sunt repellat! Modi ipsum doloribus saepe.',
+            tags: ['tag1', 'tag2', 'tag3']
         },
         {
             id: 2,
             title: 'Note 2',
-            content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque laudantium recusandae eaque labore eos eum optio numquam dolor, dolore commodi sit dolores voluptatum magnam sunt repellat! Modi ipsum doloribus saepe.'
+            content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque laudantium recusandae eaque labore eos eum optio numquam dolor, dolore commodi sit dolores voluptatum magnam sunt repellat! Modi ipsum doloribus saepe.',
+            tags: ['tag1', 'tag2']
         },
         {
             id: 3,
@@ -31,22 +35,23 @@ export class NoteService {
     ];
 
     private notes = new BehaviorSubject<INote[]>([])
-    notes$ = this.notes.asObservable();
+    public notes$ = this.notes.asObservable();
 
-    editNoteObj = new BehaviorSubject<INote>(this.note);
-    editNote$ = this.editNoteObj.asObservable();
+    private editNoteObj = new BehaviorSubject<INote>(this.note);
+    public editNote$ = this.editNoteObj.asObservable();
 
-    constructor() { }
-
-    saveNote(note: INote) {
+    public saveNote(note: INote) {
         const temp_notes = this.notes.getValue();
+
         if (note.id === -1) {
+            // Create a new note
             note.id = Math.max(0, ...temp_notes.map((n) => n.id)) + 1;
             const newNotes = [...temp_notes, note];
             this.notes.next(newNotes);
         } else {
             const index = temp_notes.findIndex(n => n.id === note.id);
             if (index !== -1) {
+                // Update the note
                 const updatedNotes = [...temp_notes];
                 updatedNotes[index] = note;
                 this.notes.next(updatedNotes);
@@ -55,35 +60,68 @@ export class NoteService {
         this.saveNotesToLocalStorage();
     }
 
-    deleteNote(id: number) {
+    public deleteNote(id: number) {
         let temp_notes = this.notes.getValue();
         temp_notes = temp_notes.filter((note) => note.id !== id);
         this.notes.next(temp_notes);
         this.saveNotesToLocalStorage();
     }
 
-    editNote(id: number) {
+    public editNote(id: number) {
         const temp_notes = this.notes.getValue();
         this.note = temp_notes.filter((note) => note.id === id)[0];
         this.editNoteObj.next(this.note);
     }
 
-    newNote(note: INote) {
+    public newNote(note: INote) {
         this.editNoteObj.next(note);
     }
 
-    private saveNotesToLocalStorage() {
-        const notes = this.notes.getValue();
-        const user_id = localStorage.getItem('token');
-        if (!user_id) return;
-        const notesWithUserId = JSON.parse(localStorage.getItem('notes') || '{}') as INoteWithUserId;
-        notesWithUserId[user_id] = notes;
-        localStorage.setItem('notes', JSON.stringify(notesWithUserId));
+    public DownloadNote(id: number): boolean {
+        const temp_notes = this.notes.getValue();
+        const note = temp_notes.filter((note) => note.id === id)[0];
+        if (note) {
+            const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+            // Заголовок
+            doc.setFontSize(22);
+            doc.setFont("Roboto", "bold");
+            const titleLines = doc.splitTextToSize(note.title, 180);
+            doc.text(titleLines, 10, 20);
+
+            // Вміст нотатки
+            doc.setFontSize(12);
+            doc.setFont("Roboto", "normal");
+            const startY = 20 + titleLines.length * 10; // 10 мм висота рядка
+            const contentLines = doc.splitTextToSize(note.content, 180);
+            doc.text(contentLines, 10, startY);
+
+            // Теги
+            doc.setFontSize(10);
+            doc.setFont("Roboto", "normal");
+            const tagsText = note.tags ? note.tags.join(', ') : '';
+            const tagsY = startY + contentLines.length * 7 + 5; // відступ після контенту
+            doc.text(tagsText, 10, tagsY);
+
+            // Дата справа внизу
+            const date = new Date().toLocaleDateString();
+            const pageHeight = doc.internal.pageSize.height;
+            const pageWidth = doc.internal.pageSize.width;
+            doc.setFontSize(10);
+            const textWidth = doc.getTextWidth(`Дата: ${date}`) + 10;
+            doc.text(`Дата: ${date}`, pageWidth - textWidth - 10, pageHeight - 10);
+
+            // Зберігаємо PDF
+            doc.save(note.title + '.pdf');
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    loadNotesFromLocalStorage() {
-        const notes = localStorage.getItem('notes');
-        const user_id = localStorage.getItem('token');
+    public loadNotesFromLocalStorage() {
+        const notes = localStorage.getItem(NOTES);
+        const user_id = localStorage.getItem(TOKEN_KEY);
+
         if (notes && user_id) {
             try {
                 const parsedNotes = JSON.parse(notes) as INoteWithUserId;
@@ -93,9 +131,18 @@ export class NoteService {
                 }
             } catch (e) {
                 console.error('Could not parse notes from local storage', e);
-                localStorage.removeItem('notes');
+                localStorage.removeItem(NOTES);
             }
         }
         this.notes.next(this.defaultNote);
+    }
+
+    private saveNotesToLocalStorage() {
+        const notes = this.notes.getValue();
+        const user_id = localStorage.getItem(TOKEN_KEY);
+        if (!user_id) return;
+        const notesWithUserId = JSON.parse(localStorage.getItem(NOTES) || '{}') as INoteWithUserId;
+        notesWithUserId[user_id] = notes;
+        localStorage.setItem('notes', JSON.stringify(notesWithUserId));
     }
 }

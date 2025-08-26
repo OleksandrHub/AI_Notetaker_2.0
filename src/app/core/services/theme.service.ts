@@ -3,22 +3,7 @@ import { THEME_STORAGE_KEY, TOKEN_KEY } from "../../shared/constants";
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-
-    private getDarkThemeUserIds(): number[] {
-        const storedIds = localStorage.getItem(THEME_STORAGE_KEY);
-        try {
-            return storedIds ? JSON.parse(storedIds) : [];
-        } catch (e) {
-            console.error('Could not parse dark theme user IDs from local storage.', e);
-            return [];
-        }
-    }
-
-    private saveDarkThemeUserIds(ids: number[]): void {
-        localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(ids));
-    }
-
-    loadTheme() {
+    public loadTheme() {
         const userIdString = localStorage.getItem(TOKEN_KEY);
         if (!userIdString) {
             document.body.classList.remove('dark-theme');
@@ -30,7 +15,7 @@ export class ThemeService {
         document.body.classList.toggle('dark-theme', isDarkTheme);
     }
 
-    changeTheme(): string {
+    public changeTheme(): string {
         const userIdString = localStorage.getItem(TOKEN_KEY);
         if (!userIdString) { return 'Dark mode'; }
         const userId = +userIdString;
@@ -49,4 +34,19 @@ export class ThemeService {
 
         return isDarkTheme ? 'Light mode' : 'Dark mode';
     }
+
+    private getDarkThemeUserIds(): number[] {
+        const storedIds = localStorage.getItem(THEME_STORAGE_KEY);
+        try {
+            return storedIds ? JSON.parse(storedIds) : [];
+        } catch (e) {
+            console.error('Could not parse dark theme user IDs from local storage.', e);
+            return [];
+        }
+    }
+
+    private saveDarkThemeUserIds(ids: number[]): void {
+        localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(ids));
+    }
+
 }

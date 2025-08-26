@@ -1,10 +1,10 @@
 @use "../../../shared/styles/extends.scss";
+@use "../../../shared/styles/mixins.scss";
+@use "../../../shared/styles/variables.scss" as vars;
 
 .dashboard-header {
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    height: vars.$height-header-dashboard;
+    @include mixins.flex(row, space-between, center);
     padding: 0 20px;
 
     @media screen and (max-width: 768px) {
@@ -23,34 +23,30 @@
         display: flex;
         gap: 10px;
     }
+
+    &__button {
+        @extend %button;
+    }
 }
 
 .dashboard-main {
     background-color: var(--threery-color);
     display: flex;
     width: 100%;
-    min-height: calc(100% - 50px);
+    min-height: calc(100% - vars.$height-header-dashboard);
 
     .notes,
-    .untitled-notes {
+    .untitled-notes,
+    .chat {
         flex: 1;
+        border: 1px solid var(--border-color);
     }
 
     .chat {
         flex: 2;
     }
 
-    .notes,
-    .untitled-notes,
-    .chat {
-        border: 1px solid var(--border-color);
-    }
-
     @media screen and (max-width: 768px) {
         flex-direction: column-reverse;
     }
-}
-
-.action {
-    @extend %button;
 }

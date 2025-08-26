@@ -16,9 +16,11 @@
 
     <form class="chat-footer" [formGroup]="form" (submit)="sendMessage()">
         <fieldset class="chat-footer__field">
-            <legend class="chat-footer__error" *ngIf="messageError">
+            @if(messageError) {
+            <legend class="chat-footer__error">
                 {{messageError}}
             </legend>
+            }
             <textarea type="text" name="chat input" id="chat input" placeholder="chat input" class="chat-footer__input"
                 [formControl]="chatInput"></textarea>
         </fieldset>

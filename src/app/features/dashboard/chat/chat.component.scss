@@ -1,8 +1,19 @@
+@use "../../../shared/styles/extends.scss";
+@use "../../../shared/styles/mixins.scss";
+@use "../../../shared/styles/variables.scss";
+
 .chat {
+    &-header {
+        @extend %header;
+
+        &__title {
+            @extend %header-title;
+        }
+    }
+
     &-main {
-        flex-direction: column;
-        display: flex;
-        justify-content: space-around;
+        @extend %main;
+        @include mixins.flex(column, space-around, none);
     }
 
     &-message {
@@ -19,7 +30,6 @@
         &__action {
             display: block;
             padding: 10px 0;
-            display: block;
             margin: 10px auto;
             width: clamp(100px, 100px + 5vw, 250px);
         }
@@ -79,10 +89,8 @@
     }
 
     &-footer {
-        display: flex;
+        @include mixins.flex(row, center, center);
         flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
         margin-top: 20px;
         width: 100%;
 
@@ -95,57 +103,25 @@
         }
 
         &__input {
-            border: 1px solid var(--border-color);
-            width: 100%;
+            @include mixins.input();
             padding: 8px;
             line-height: 1.5rem;
             font-size: 1rem;
-            resize: none;
-            border-radius: 10px;
-
-            &:focus {
-                outline: none;
-            }
         }
 
         &__error {
+            color: var(--error-color);
+            font-size: 0.6rem;
             padding: 2px;
-            border-radius: 5px;
             position: absolute;
             top: -1.25rem;
             left: 0;
-            color: var(--error-color);
-            font-size: 0.6rem;
         }
 
         &__action {
+            @extend %button;
             margin: 5px;
             padding: 1.5rem 30px;
         }
-    }
-}
-
-.chat {
-    &-header {
-        height: 40px;
-        border-bottom: 1px solid var(--border-color);
-        border-radius: 5px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        &__title {
-            font-size: 1.5rem;
-            padding-left: 10px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap
-        }
-    }
-
-    &-main {
-        min-height: 300px;
-        height: calc(100% - 40px);
-        padding: 10px;
     }
 }

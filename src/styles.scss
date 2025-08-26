@@ -51,4 +51,17 @@ input {
 html,
 body {
     height: 100%;
+    scroll-behavior: smooth;
+
+}
+
+.default-snackbar {
+    background-color: var(--primary-color);
+    border-color: var(--border-color);
+    color: var(--primary-text-color);
+
+    span {
+        background-color: var(--primary-color);
+        border-color: var(--border-color);
+    }
 }

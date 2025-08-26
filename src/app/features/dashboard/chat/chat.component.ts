@@ -1,5 +1,5 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IMessage } from '../../../shared/Interfaces';
 import { OpenAiService } from '../../../core/services/onpenai.service';
@@ -12,25 +12,23 @@ import { SnackBarService } from '../../../core/services/snackBar.service';
   selector: 'app-chat',
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
-    NgClass,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
   ],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss'
+  styleUrl: './chat.component.scss',
 })
 export class ChatComponent {
-  chatInput = new FormControl('', Validators.required);
-  messageError: string = '';
-  themeButtonText: string = 'Dark mode';
+  protected chatInput = new FormControl('', Validators.required);
+  protected messageError: string = '';
+  protected themeButtonText: string = 'Dark mode';
 
 
-  form = new FormGroup({
+  public form = new FormGroup({
     chatInput: this.chatInput
   })
-  messages: IMessage[] = [ //Потім видалити
+  protected messages: IMessage[] = [ //Потім видалити
     {
       user: 'User',
       text: 'Hello'
@@ -41,7 +39,7 @@ export class ChatComponent {
     }
   ];
 
-  nameUser: string = '';
+  protected nameUser: string = '';
 
   constructor(
     private openAiService: OpenAiService,
@@ -53,7 +51,7 @@ export class ChatComponent {
     this.nameUser = this.authService.userisAuth?.login || '';
   }
 
-  sendMessage() {
+  public sendMessage() {
     this.messageError = '';
     if (this.form.valid && this.chatInput.value?.trim()) {
       this.pushMessage('User', this.chatInput.value);
@@ -74,7 +72,7 @@ export class ChatComponent {
     }
   }
 
-  selectMessage(message: IMessage) {
+  public selectMessage(message: IMessage) {
     if (message.user === 'Bot') {
       this.noteService.newNote({
         id: -1,

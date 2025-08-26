@@ -3,17 +3,21 @@ import { Router } from "@angular/router";
 import { IUser } from "../../shared/Interfaces";
 import { ThemeService } from "./theme.service";
 import { NoteService } from "./note.service";
-import { THEME_STORAGE_KEY, TOKEN_KEY } from "../../shared/constants";
+import { NOTES, THEME_STORAGE_KEY, TOKEN_KEY, USERS } from "../../shared/constants";
+import { SnackBarService } from "./snackBar.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    userisAuth: IUser | null = null;
+    public userisAuth: IUser | null = null;
+    public users: IUser[] = []
 
-    users: IUser[] = []
+    constructor(private router: Router, private themeService: ThemeService, private noteService: NoteService, private snackBarService: SnackBarService) {
+        this.InitAuth();
+    }
 
-    constructor(private router: Router, private themeService: ThemeService, private noteService: NoteService) {
+    private InitAuth() {
         this.loadUsersFromLocalStorage();
 
         if (localStorage.getItem(TOKEN_KEY)) {
@@ -21,6 +25,7 @@ export class AuthService {
             this.router.navigate(['/dashboard']);
             this.themeService.loadTheme();
             this.noteService.loadNotesFromLocalStorage();
+            this.snackBarService.open('Ви успішно увійшли!');
         }
         // if (this.users.length === 0) { // Потім видалити
         //     this.users.push({
@@ -31,34 +36,34 @@ export class AuthService {
         // }
     }
 
-    login(user: IUser) {
+    public login(user: IUser) {
         this.userisAuth = { ...user };
         localStorage.setItem(TOKEN_KEY, user.id.toString());
         this.noteService.loadNotesFromLocalStorage();
         this.themeService.loadTheme();
     }
 
-    register(user: IUser) {
+    public register(user: IUser) {
         this.users.push(user);
         this.saveUsersToLocalStorage();
         this.noteService.loadNotesFromLocalStorage();
         this.themeService.loadTheme();
     }
 
-    logoutWithAccount() {
+    public logoutWithAccount() {
         this.userisAuth = null;
         this.router.navigate(['/login']);
         localStorage.removeItem(TOKEN_KEY);
         this.themeService.loadTheme();
     }
 
-    deleteAccount() {
+    public deleteAccount() {
         if (this.userisAuth) {
-            const notes = JSON.parse(localStorage.getItem('notes') || '{}');
+            const notes = JSON.parse(localStorage.getItem(NOTES) || '{}');
             const darkThemeUserIds = JSON.parse(localStorage.getItem(THEME_STORAGE_KEY) || '[]') as number[];
             const userId = this.userisAuth.id;
             delete notes[userId];
-            localStorage.setItem('notes', JSON.stringify(notes));
+            localStorage.setItem(NOTES, JSON.stringify(notes));
 
             if (darkThemeUserIds.includes(userId)) {
                 darkThemeUserIds.splice(darkThemeUserIds.indexOf(userId), 1);
@@ -72,11 +77,11 @@ export class AuthService {
     }
 
     private saveUsersToLocalStorage() {
-        localStorage.setItem('users', JSON.stringify(this.users));
+        localStorage.setItem(USERS, JSON.stringify(this.users));
     }
 
     private loadUsersFromLocalStorage() {
-        const users = localStorage.getItem('users');
+        const users = localStorage.getItem(USERS);
         try {
             this.users = users ? JSON.parse(users) : [];
         } catch (e) {

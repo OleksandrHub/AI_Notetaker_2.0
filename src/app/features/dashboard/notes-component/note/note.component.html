@@ -2,7 +2,18 @@
     <details class="notes__details">
         <summary class="notes__summary">{{ note.title }}</summary>
         <pre class="notes__text">{{ note.content }}</pre>
+        <input class="notes__input" [(ngModel)]="newTag" placeholder="Додати тег (макс. 20 символів)" type="text"
+            maxlength="20">
+        <button (click)="addTag()" class="notes__button">+</button>
+
+        <div class="notes__tags">
+            <span class="notes__tag" *ngFor="let tag of note.tags" (click)="removeTag(tag)">
+                {{ tag }} ✖
+            </span>
+        </div>
+
     </details>
     <button class="notes__button" (click)="deleteNote(note.id)">Delete note</button>
     <button class="notes__button" (click)="editNote(note.id)">Edit note</button>
+    <button class="notes__button" (click)="DownloadNote(note.id)">Download note</button>
 </section>
